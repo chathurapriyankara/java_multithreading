@@ -7,18 +7,18 @@ package threads;
 public class Threads {
 
     public static void main(String[] args) {
-        
+
         PrintChar printA = new PrintChar('a', 100);
-        PrintChar printB = new PrintChar('b', 100);
-        PrintNum print100 = new PrintNum(100);
+       // PrintChar printB = new PrintChar('b', 100);
+       // PrintNum print100 = new PrintNum(100);
 
         Thread thread1 = new Thread(printA);
-        Thread thread2 = new Thread(printB);
-        Thread thread3 = new Thread(print100);
-        
+       // Thread thread2 = new Thread(printB);
+       // Thread thread3 = new Thread(print100);
+
         thread1.start();
-        thread2.start();
-        thread3.start();
+       // thread2.start();
+       // thread3.start();
 
     }
 
@@ -36,8 +36,18 @@ class PrintChar implements Runnable {
     }
 
     public void run() {
-        for (int i = 0; i < times; i++) {
-            System.out.println(charToPrint);
+        Thread thread4 = new Thread(new PrintChar('c', 40));
+        thread4.start();
+        try {
+            for (int i = 0; i < times; i++) {
+                System.out.print(charToPrint+" ");
+                // Thread.yield();
+                if (i == 50) {
+                    thread4.join();
+                }
+            }
+        } catch (InterruptedException e) {
+
         }
     }
 }
